@@ -14,8 +14,6 @@ param(
 
   [string]$BuildTarget = "cefsimple",
 
-  [string]$NinjaJobs = "",
-
   [bool]$WithPgoProfiles = $false
 )
 
@@ -47,9 +45,6 @@ Invoke-WebRequest `
 $env:GN_DEFINES = $GnDefines
 $env:GYP_MSVS_VERSION = "2022"
 $env:CEF_ARCHIVE_FORMAT = "tar.bz2"
-if ($NinjaJobs -ne "") {
-  $env:NINJA_ARGS = "-j$NinjaJobs"
-}
 
 $archFlag = "--x64-build"
 if ($Arch -eq "arm64") {
@@ -77,9 +72,6 @@ if ($WithPgoProfiles) {
 $python = Get-PythonCommand
 Write-Host "Building CEF branch $CefBranch for Windows $Arch"
 Write-Host "GN_DEFINES=$env:GN_DEFINES"
-if ($env:NINJA_ARGS) {
-  Write-Host "NINJA_ARGS=$env:NINJA_ARGS"
-}
 & $python @automateArgs
 if ($LASTEXITCODE -ne 0) {
   exit $LASTEXITCODE

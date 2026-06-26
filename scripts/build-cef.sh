@@ -8,7 +8,6 @@ set -euo pipefail
 
 BUILD_TARGET="${CEF_BUILD_TARGET:-cefsimple}"
 WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-false}"
-NINJA_JOBS="${CEF_NINJA_JOBS:-}"
 
 case "$CEF_ARCH" in
   x64)
@@ -39,9 +38,6 @@ curl -fsSL \
 
 export GN_DEFINES="$CEF_GN_DEFINES"
 export CEF_ARCHIVE_FORMAT=tar.bz2
-if [[ -n "$NINJA_JOBS" ]]; then
-  export NINJA_ARGS="-j$NINJA_JOBS"
-fi
 
 ARGS=(
   "$AUTOMATE"
@@ -61,7 +57,4 @@ fi
 
 echo "Building CEF branch $CEF_BRANCH for $(uname -s) $CEF_ARCH"
 echo "GN_DEFINES=$GN_DEFINES"
-if [[ -n "${NINJA_ARGS:-}" ]]; then
-  echo "NINJA_ARGS=$NINJA_ARGS"
-fi
 python3 "${ARGS[@]}"

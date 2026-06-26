@@ -87,8 +87,6 @@ Inputs:
   enabled for Windows x64, Linux x64 and macOS ARM64, matching CEF's automated
   build examples. Defaults to disabled for Windows ARM64 and Linux ARM64
   cross-builds.
-- `ninja_jobs`: Optional Ninja parallelism. Leave empty to use the build
-  default, or set a value like `32` to export `NINJA_ARGS=-j32`.
 
 Each workflow uploads the generated archives from:
 

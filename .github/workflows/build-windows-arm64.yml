@@ -16,10 +16,6 @@ on:
         required: true
         type: boolean
         default: false
-      ninja_jobs:
-        description: Optional Ninja job count. Leave empty to use the build default.
-        required: false
-        default: ""
 
 permissions:
   contents: read
@@ -36,7 +32,6 @@ jobs:
       CEF_GN_DEFINES: is_official_build=true use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false
       CEF_DOWNLOAD_DIR: C:\cef
       CEF_WITH_PGO_PROFILES: ${{ inputs.with_pgo_profiles }}
-      CEF_NINJA_JOBS: ${{ inputs.ninja_jobs }}
 
     steps:
       - name: Check out build scripts
@@ -51,7 +46,6 @@ jobs:
           -Arch "${env:CEF_ARCH}"
           -GnDefines "${env:CEF_GN_DEFINES}"
           -BuildTarget "${env:CEF_BUILD_TARGET}"
-          -NinjaJobs "${env:CEF_NINJA_JOBS}"
           -WithPgoProfiles:([System.Convert]::ToBoolean("${env:CEF_WITH_PGO_PROFILES}"))
 
       - name: Upload CEF binary distributions
