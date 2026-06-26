@@ -66,12 +66,20 @@ Xcode or Linux distribution changes.
 
 ## Running
 
-Run the **Build CEF** workflow manually from GitHub Actions.
+Run one of the manual workflows from the GitHub Actions tab:
+
+| Workflow | Target |
+| --- | --- |
+| **Build CEF Windows x64** | Windows x64 |
+| **Build CEF Windows ARM64** | Windows ARM64 |
+| **Build CEF Linux x64** | Linux x64 |
+| **Build CEF Linux ARM64** | Linux ARM64 |
+| **Build CEF macOS ARM64** | macOS ARM64 |
+
+There is intentionally no workflow that builds every target at once.
 
 Inputs:
 
-- `target`: Target to build. Defaults to `windows-arm64` for the first
-  validation run. The workflow builds exactly one selected target per run.
 - `cef_branch`: CEF branch number. Defaults to `7204`.
 - `build_target`: Target passed to `automate-git.py --build-target`.
   Defaults to `cefsimple`.
@@ -79,7 +87,7 @@ Inputs:
 - `ninja_jobs`: Optional Ninja parallelism. Leave empty to use the build
   default, or set a value like `32` to export `NINJA_ARGS=-j32`.
 
-Each matrix job uploads the generated archives from:
+Each workflow uploads the generated archives from:
 
 ```text
 <download-dir>/chromium/src/cef/binary_distrib/
