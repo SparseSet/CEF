@@ -47,6 +47,7 @@ ARGS=(
   "--client-distrib"
   "--force-clean"
   "--no-chromium-history"
+  "--no-debug-build"
   "--build-target=$BUILD_TARGET"
   "$ARCH_FLAG"
 )

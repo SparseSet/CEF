@@ -5,6 +5,9 @@ This repository contains only build orchestration for Chromium Embedded Framewor
 script at build time, then lets that script download Chromium, CEF and
 `depot_tools`.
 
+The workflows build release-only CEF distributions by passing
+`--no-debug-build` to `automate-git.py`.
+
 The builds intentionally set:
 
 ```text

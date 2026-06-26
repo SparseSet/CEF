@@ -61,6 +61,7 @@ $automateArgs = @(
   "--client-distrib",
   "--force-clean",
   "--no-chromium-history",
+  "--no-debug-build",
   "--build-target=$BuildTarget",
   $archFlag
 )
