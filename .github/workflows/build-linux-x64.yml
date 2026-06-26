@@ -7,10 +7,6 @@ on:
         description: CEF branch number to build
         required: true
         default: "7204"
-      build_target:
-        description: CEF target to build before packaging
-        required: true
-        default: cefsimple
       with_pgo_profiles:
         description: Download Chromium PGO profiles where applicable
         required: true
@@ -27,7 +23,7 @@ jobs:
     timeout-minutes: 360
     env:
       CEF_BRANCH: ${{ inputs.cef_branch }}
-      CEF_BUILD_TARGET: ${{ inputs.build_target }}
+      CEF_BUILD_TARGET: cefsimple
       CEF_ARCH: x64
       CEF_GN_DEFINES: is_official_build=true use_sysroot=true symbol_level=1 is_cfi=false v8_enable_sandbox=false
       CEF_DOWNLOAD_DIR: /tmp/cef

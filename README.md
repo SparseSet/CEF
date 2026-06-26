@@ -84,12 +84,12 @@ There is intentionally no workflow that builds every target at once.
 Inputs:
 
 - `cef_branch`: CEF branch number. Defaults to `7204`.
-- `build_target`: Target passed to `automate-git.py --build-target`.
-  Defaults to `cefsimple`.
 - `with_pgo_profiles`: Adds `--with-pgo-profiles` when enabled. Defaults to
   enabled for Windows x64, Linux x64 and macOS ARM64, matching CEF's automated
   build examples. Defaults to disabled for Windows ARM64 and Linux ARM64
   cross-builds.
+
+All workflows pass `--build-target=cefsimple`.
 
 Each workflow uploads the generated archives from:
 
