@@ -83,7 +83,10 @@ Inputs:
 - `cef_branch`: CEF branch number. Defaults to `7204`.
 - `build_target`: Target passed to `automate-git.py --build-target`.
   Defaults to `cefsimple`.
-- `with_pgo_profiles`: Adds `--with-pgo-profiles` when enabled.
+- `with_pgo_profiles`: Adds `--with-pgo-profiles` when enabled. Defaults to
+  enabled for Windows x64, Linux x64 and macOS ARM64, matching CEF's automated
+  build examples. Defaults to disabled for Windows ARM64 and Linux ARM64
+  cross-builds.
 - `ninja_jobs`: Optional Ninja parallelism. Leave empty to use the build
   default, or set a value like `32` to export `NINJA_ARGS=-j32`.
 

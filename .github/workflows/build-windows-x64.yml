@@ -15,7 +15,7 @@ on:
         description: Download Chromium PGO profiles where applicable
         required: true
         type: boolean
-        default: false
+        default: true
       ninja_jobs:
         description: Optional Ninja job count. Leave empty to use the build default.
         required: false
