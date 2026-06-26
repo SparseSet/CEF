@@ -36,49 +36,48 @@ permissions:
   contents: read
 
 jobs:
+  select-target:
+    name: Select target
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.target.outputs.matrix }}
+    steps:
+      - name: Select build target
+        id: target
+        shell: bash
+        run: |
+          case "${{ inputs.target }}" in
+            windows-x64)
+              matrix='{"include":[{"name":"windows-x64","platform":"windows","runner":"cef-windows-x64","arch":"x64","download_dir":"C:\\cef","gn_defines":"is_official_build=true v8_enable_sandbox=false"}]}'
+              ;;
+            windows-arm64)
+              matrix='{"include":[{"name":"windows-arm64","platform":"windows","runner":"cef-windows-x64","arch":"arm64","download_dir":"C:\\cef","gn_defines":"is_official_build=true use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false"}]}'
+              ;;
+            linux-x64)
+              matrix='{"include":[{"name":"linux-x64","platform":"linux","runner":"cef-linux-x64","arch":"x64","download_dir":"/tmp/cef","gn_defines":"is_official_build=true use_sysroot=true symbol_level=1 is_cfi=false v8_enable_sandbox=false"}]}'
+              ;;
+            linux-arm64)
+              matrix='{"include":[{"name":"linux-arm64","platform":"linux","runner":"cef-linux-x64","arch":"arm64","download_dir":"/tmp/cef","gn_defines":"is_official_build=true use_sysroot=true symbol_level=1 is_cfi=false use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false"}]}'
+              ;;
+            macos-arm64)
+              matrix='{"include":[{"name":"macos-arm64","platform":"macos","runner":"cef-macos-arm64","arch":"arm64","download_dir":"/tmp/cef","gn_defines":"is_official_build=true v8_enable_sandbox=false"}]}'
+              ;;
+            *)
+              echo "Unsupported target: ${{ inputs.target }}" >&2
+              exit 1
+              ;;
+          esac
+
+          echo "matrix=$matrix" >> "$GITHUB_OUTPUT"
+
   build:
     name: ${{ matrix.name }}
-    if: ${{ inputs.target == matrix.name }}
+    needs: select-target
     runs-on: ${{ matrix.runner }}
     timeout-minutes: 360
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - name: windows-x64
-            platform: windows
-            runner: cef-windows-x64
-            arch: x64
-            download_dir: C:\cef
-            gn_defines: is_official_build=true v8_enable_sandbox=false
-
-          - name: windows-arm64
-            platform: windows
-            runner: cef-windows-x64
-            arch: arm64
-            download_dir: C:\cef
-            gn_defines: is_official_build=true use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false
-
-          - name: linux-x64
-            platform: linux
-            runner: cef-linux-x64
-            arch: x64
-            download_dir: /tmp/cef
-            gn_defines: is_official_build=true use_sysroot=true symbol_level=1 is_cfi=false v8_enable_sandbox=false
-
-          - name: linux-arm64
-            platform: linux
-            runner: cef-linux-x64
-            arch: arm64
-            download_dir: /tmp/cef
-            gn_defines: is_official_build=true use_sysroot=true symbol_level=1 is_cfi=false use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false
-
-          - name: macos-arm64
-            platform: macos
-            runner: cef-macos-arm64
-            arch: arm64
-            download_dir: /tmp/cef
-            gn_defines: is_official_build=true v8_enable_sandbox=false
+      matrix: ${{ fromJSON(needs.select-target.outputs.matrix) }}
 
     env:
       CEF_BRANCH: ${{ inputs.cef_branch }}
