@@ -19,7 +19,7 @@ permissions:
 jobs:
   build:
     name: linux-x64
-    runs-on: cef-linux-x64-16c
+    runs-on: cef-linux-x64-32c
     timeout-minutes: 360
     env:
       CEF_BRANCH: ${{ inputs.cef_branch }}
