@@ -8,6 +8,7 @@ set -euo pipefail
 
 BUILD_TARGET="${CEF_BUILD_TARGET:-cefsimple}"
 WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-false}"
+FORCE_CLEAN="${CEF_FORCE_CLEAN:-true}"
 
 case "$CEF_ARCH" in
   x64)
@@ -45,12 +46,15 @@ ARGS=(
   "--branch=$CEF_BRANCH"
   "--minimal-distrib"
   "--client-distrib"
-  "--force-clean"
   "--no-chromium-history"
   "--no-debug-build"
   "--build-target=$BUILD_TARGET"
   "$ARCH_FLAG"
 )
+
+if [[ "$FORCE_CLEAN" == "true" ]]; then
+  ARGS+=("--force-clean")
+fi
 
 if [[ "$WITH_PGO_PROFILES" == "true" ]]; then
   ARGS+=("--with-pgo-profiles")

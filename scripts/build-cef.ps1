@@ -14,7 +14,9 @@ param(
 
   [string]$BuildTarget = "cefsimple",
 
-  [bool]$WithPgoProfiles = $false
+  [bool]$WithPgoProfiles = $false,
+
+  [bool]$ForceClean = $true
 )
 
 $ErrorActionPreference = "Stop"
@@ -87,12 +89,15 @@ $automateArgs = @(
   "--branch=$CefBranch",
   "--minimal-distrib",
   "--client-distrib",
-  "--force-clean",
   "--no-chromium-history",
   "--no-debug-build",
   "--build-target=$BuildTarget",
   $archFlag
 )
+
+if ($ForceClean) {
+  $automateArgs += "--force-clean"
+}
 
 if ($WithPgoProfiles) {
   $automateArgs += "--with-pgo-profiles"

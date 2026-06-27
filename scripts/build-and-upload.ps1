@@ -9,7 +9,9 @@ param(
 
   [string]$DownloadDir,
 
-  [string]$BuildDir
+  [string]$BuildDir,
+
+  [switch]$Resume
 )
 
 $ErrorActionPreference = "Stop"
@@ -66,7 +68,8 @@ switch ($Target) {
   -Arch $arch `
   -GnDefines $gnDefines `
   -BuildTarget $buildTarget `
-  -WithPgoProfiles:$withPgoProfiles
+  -WithPgoProfiles:$withPgoProfiles `
+  -ForceClean:(!$Resume)
 
 if ($LASTEXITCODE -ne 0) {
   exit $LASTEXITCODE

@@ -25,7 +25,7 @@ without S3, pass `--no-upload` on Linux/macOS or `-NoUpload` on Windows.
 Linux/macOS:
 
 ```bash
-bash scripts/build-and-upload.sh <target> [--download-dir DIR] [--build-dir DIR] [--skip-prereqs] [--no-upload] [--foreground]
+bash scripts/build-and-upload.sh <target> [--download-dir DIR] [--build-dir DIR] [--skip-prereqs] [--resume] [--no-upload] [--foreground]
 ```
 
 | Argument | Meaning |
@@ -34,13 +34,14 @@ bash scripts/build-and-upload.sh <target> [--download-dir DIR] [--build-dir DIR]
 | `--download-dir DIR` | Download and compile under `DIR`. Defaults to `/tmp/cef`. |
 | `--build-dir DIR` | Copy final CEF binary distributions to `DIR`. |
 | `--skip-prereqs` | Do not run `scripts/install-linux-build-deps.sh`. |
+| `--resume` | Reuse the existing checkout/build tree instead of passing `--force-clean`. |
 | `--no-upload` | Build only; do not require AWS config and do not upload to S3. |
 | `--foreground` | Run in the current shell instead of starting a detached `nohup` build. |
 
 Windows:
 
 ```powershell
-.\scripts\build-and-upload.ps1 -Target <target> [-DownloadDir DIR] [-BuildDir DIR] [-InstallPrereqs] [-NoUpload]
+.\scripts\build-and-upload.ps1 -Target <target> [-DownloadDir DIR] [-BuildDir DIR] [-InstallPrereqs] [-Resume] [-NoUpload]
 ```
 
 | Argument | Meaning |
@@ -49,6 +50,7 @@ Windows:
 | `-DownloadDir DIR` | Download and compile under `DIR`. Defaults to `C:\cef`. |
 | `-BuildDir DIR` | Copy final CEF binary distributions to `DIR`. |
 | `-InstallPrereqs` | Run `scripts\install-windows-build-deps.ps1` first. |
+| `-Resume` | Reuse the existing checkout/build tree instead of passing `--force-clean`. |
 | `-NoUpload` | Build only; do not require AWS config and do not upload to S3. |
 
 ## Linux

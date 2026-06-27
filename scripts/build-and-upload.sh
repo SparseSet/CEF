@@ -4,7 +4,7 @@ set -euo pipefail
 usage() {
   cat <<'EOF'
 Usage:
-  scripts/build-and-upload.sh <target> [--download-dir DIR] [--build-dir DIR] [--skip-prereqs] [--foreground] [--no-upload]
+  scripts/build-and-upload.sh <target> [--download-dir DIR] [--build-dir DIR] [--skip-prereqs] [--resume] [--foreground] [--no-upload]
 
 Targets:
   linux-x64
@@ -47,6 +47,7 @@ shift
 SKIP_PREREQS=false
 FOREGROUND=false
 NO_UPLOAD=false
+RESUME=false
 REQUESTED_DOWNLOAD_DIR=""
 REQUESTED_BUILD_DIR=""
 while [[ $# -gt 0 ]]; do
@@ -69,6 +70,9 @@ while [[ $# -gt 0 ]]; do
       ;;
     --skip-prereqs)
       SKIP_PREREQS=true
+      ;;
+    --resume)
+      RESUME=true
       ;;
     --foreground)
       FOREGROUND=true
@@ -122,6 +126,9 @@ fi
 if [[ "$SKIP_PREREQS" == "true" ]]; then
   RUN_ARGS+=("--skip-prereqs")
 fi
+if [[ "$RESUME" == "true" ]]; then
+  RUN_ARGS+=("--resume")
+fi
 if [[ "$NO_UPLOAD" == "true" ]]; then
   RUN_ARGS+=("--no-upload")
 fi
@@ -159,6 +166,11 @@ case "$TARGET" in
 esac
 
 export CEF_BUILD_DIR="${REQUESTED_BUILD_DIR:-${CEF_BUILD_DIR:-}}"
+if [[ "$RESUME" == "true" ]]; then
+  export CEF_FORCE_CLEAN="false"
+else
+  export CEF_FORCE_CLEAN="${CEF_FORCE_CLEAN:-true}"
+fi
 
 if [[ "$FOREGROUND" == "false" ]]; then
   mkdir -p "$LOG_DIR"
