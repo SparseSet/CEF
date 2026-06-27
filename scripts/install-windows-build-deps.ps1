@@ -33,7 +33,7 @@ if (-not (Test-Path $vsSetup)) {
   throw "Visual Studio installer was not found at $vsSetup"
 }
 
-$sdkInstallArgs = "modify --installPath `"$vsInstallPath`" --add Microsoft.VisualStudio.Component.Windows11SDK.26100 --quiet --wait --norestart"
+$sdkInstallArgs = "modify --installPath `"$vsInstallPath`" --add Microsoft.VisualStudio.Component.Windows11SDK.26100 --quiet --norestart"
 $sdkInstall = Start-Process `
   -FilePath $vsSetup `
   -ArgumentList $sdkInstallArgs `
