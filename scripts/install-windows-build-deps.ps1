@@ -64,7 +64,16 @@ if (-not (Test-Path $vsSetup)) {
 }
 
 $vsInstallPath = Get-VsBuildToolsPath
-$sdkInstallArgs = "modify --installPath `"$vsInstallPath`" --add Microsoft.VisualStudio.Component.Windows11SDK.26100 --add Microsoft.VisualStudio.Component.VC.Tools.ARM64 --quiet --norestart"
+$sdkInstallArgs = @(
+  "modify",
+  "--installPath", "`"$vsInstallPath`"",
+  "--add", "Microsoft.VisualStudio.Component.Windows11SDK.26100",
+  "--add", "Microsoft.VisualStudio.Component.VC.ATL",
+  "--add", "Microsoft.VisualStudio.Component.VC.Tools.ARM64",
+  "--add", "Microsoft.VisualStudio.Component.VC.ATL.ARM64",
+  "--quiet",
+  "--norestart"
+) -join " "
 $sdkInstall = Start-Process `
   -FilePath $vsSetup `
   -ArgumentList $sdkInstallArgs `
