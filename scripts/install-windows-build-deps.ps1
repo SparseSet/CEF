@@ -68,9 +68,10 @@ $sdkInstallArgs = @(
   "modify",
   "--installPath", "`"$vsInstallPath`"",
   "--add", "Microsoft.VisualStudio.Component.Windows11SDK.26100",
-  "--add", "Microsoft.VisualStudio.Component.VC.ATL",
+  "--add", "Microsoft.VisualStudio.Component.VC.ATLMFC",
   "--add", "Microsoft.VisualStudio.Component.VC.Tools.ARM64",
-  "--add", "Microsoft.VisualStudio.Component.VC.ATL.ARM64",
+  "--add", "Microsoft.VisualStudio.Component.VC.MFC.ARM64",
+  "--includeRecommended",
   "--quiet",
   "--norestart"
 ) -join " "
