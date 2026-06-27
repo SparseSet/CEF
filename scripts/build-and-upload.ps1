@@ -48,11 +48,13 @@ $withPgoProfiles = if ($env:CEF_WITH_PGO_PROFILES) { [System.Convert]::ToBoolean
 switch ($Target) {
   "windows-x64" {
     $arch = "x64"
+    $buildTarget = "cefclient"
     if (-not $env:CEF_WITH_PGO_PROFILES) { $withPgoProfiles = $true }
     $gnDefines = "is_official_build=true v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
   }
   "windows-arm64" {
     $arch = "arm64"
+    $buildTarget = "cefsimple"
     if (-not $env:CEF_WITH_PGO_PROFILES) { $withPgoProfiles = $false }
     $gnDefines = "is_official_build=true use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
   }
@@ -63,7 +65,7 @@ switch ($Target) {
   -DownloadDir $downloadDir `
   -Arch $arch `
   -GnDefines $gnDefines `
-  -BuildTarget "cefsimple" `
+  -BuildTarget $buildTarget `
   -WithPgoProfiles:$withPgoProfiles
 
 if ($LASTEXITCODE -ne 0) {

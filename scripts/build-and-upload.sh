@@ -110,7 +110,6 @@ fi
 export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-}"
 export AWS_REGION="$AWS_DEFAULT_REGION"
 export CEF_BRANCH="${CEF_BRANCH:-7204}"
-export CEF_BUILD_TARGET="cefsimple"
 export CEF_WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-}"
 
 RUN_ARGS=("$TARGET")
@@ -131,6 +130,7 @@ case "$TARGET" in
   linux-x64)
     [[ "$(uname -s)" == "Linux" ]] || { echo "$TARGET must run on Linux." >&2; exit 1; }
     export CEF_ARCH="x64"
+    export CEF_BUILD_TARGET="cefsimple"
     export CEF_DOWNLOAD_DIR="${REQUESTED_DOWNLOAD_DIR:-${CEF_DOWNLOAD_DIR:-/tmp/cef}}"
     export CEF_WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-true}"
     export CEF_GN_DEFINES="is_official_build=true use_sysroot=true symbol_level=1 is_cfi=false v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
@@ -138,6 +138,7 @@ case "$TARGET" in
   linux-arm64)
     [[ "$(uname -s)" == "Linux" ]] || { echo "$TARGET must run on Linux." >&2; exit 1; }
     export CEF_ARCH="arm64"
+    export CEF_BUILD_TARGET="cefsimple"
     export CEF_DOWNLOAD_DIR="${REQUESTED_DOWNLOAD_DIR:-${CEF_DOWNLOAD_DIR:-/tmp/cef}}"
     export CEF_WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-false}"
     export CEF_GN_DEFINES="is_official_build=true use_sysroot=true symbol_level=1 is_cfi=false use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
@@ -145,6 +146,7 @@ case "$TARGET" in
   macos-arm64)
     [[ "$(uname -s)" == "Darwin" ]] || { echo "$TARGET must run on macOS." >&2; exit 1; }
     export CEF_ARCH="arm64"
+    export CEF_BUILD_TARGET="cefclient"
     export CEF_DOWNLOAD_DIR="${REQUESTED_DOWNLOAD_DIR:-${CEF_DOWNLOAD_DIR:-/tmp/cef}}"
     export CEF_WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-true}"
     export CEF_GN_DEFINES="is_official_build=true v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
