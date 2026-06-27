@@ -2,3 +2,4 @@ tools/automate/
 cef/
 chromium_git/
 *.log
+logs/
