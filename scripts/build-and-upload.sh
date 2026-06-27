@@ -168,8 +168,12 @@ esac
 export CEF_BUILD_DIR="${REQUESTED_BUILD_DIR:-${CEF_BUILD_DIR:-}}"
 if [[ "$RESUME" == "true" ]]; then
   export CEF_FORCE_CLEAN="false"
+  export CEF_FORCE_BUILD="true"
+  export CEF_FORCE_DISTRIB="true"
 else
   export CEF_FORCE_CLEAN="${CEF_FORCE_CLEAN:-true}"
+  export CEF_FORCE_BUILD="${CEF_FORCE_BUILD:-false}"
+  export CEF_FORCE_DISTRIB="${CEF_FORCE_DISTRIB:-false}"
 fi
 
 if [[ "$FOREGROUND" == "false" ]]; then

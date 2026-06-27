@@ -16,7 +16,11 @@ param(
 
   [bool]$WithPgoProfiles = $false,
 
-  [bool]$ForceClean = $true
+  [bool]$ForceClean = $true,
+
+  [bool]$ForceBuild = $false,
+
+  [bool]$ForceDistrib = $false
 )
 
 $ErrorActionPreference = "Stop"
@@ -97,6 +101,14 @@ $automateArgs = @(
 
 if ($ForceClean) {
   $automateArgs += "--force-clean"
+}
+
+if ($ForceBuild) {
+  $automateArgs += "--force-build"
+}
+
+if ($ForceDistrib) {
+  $automateArgs += "--force-distrib"
 }
 
 if ($WithPgoProfiles) {

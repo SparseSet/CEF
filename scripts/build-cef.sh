@@ -9,6 +9,8 @@ set -euo pipefail
 BUILD_TARGET="${CEF_BUILD_TARGET:-cefsimple}"
 WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-false}"
 FORCE_CLEAN="${CEF_FORCE_CLEAN:-true}"
+FORCE_BUILD="${CEF_FORCE_BUILD:-false}"
+FORCE_DISTRIB="${CEF_FORCE_DISTRIB:-false}"
 
 case "$CEF_ARCH" in
   x64)
@@ -54,6 +56,14 @@ ARGS=(
 
 if [[ "$FORCE_CLEAN" == "true" ]]; then
   ARGS+=("--force-clean")
+fi
+
+if [[ "$FORCE_BUILD" == "true" ]]; then
+  ARGS+=("--force-build")
+fi
+
+if [[ "$FORCE_DISTRIB" == "true" ]]; then
+  ARGS+=("--force-distrib")
 fi
 
 if [[ "$WITH_PGO_PROFILES" == "true" ]]; then

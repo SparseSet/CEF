@@ -69,7 +69,9 @@ switch ($Target) {
   -GnDefines $gnDefines `
   -BuildTarget $buildTarget `
   -WithPgoProfiles:$withPgoProfiles `
-  -ForceClean:(!$Resume)
+  -ForceClean:(!$Resume) `
+  -ForceBuild:$Resume `
+  -ForceDistrib:$Resume
 
 if ($LASTEXITCODE -ne 0) {
   exit $LASTEXITCODE

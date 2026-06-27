@@ -34,7 +34,7 @@ bash scripts/build-and-upload.sh <target> [--download-dir DIR] [--build-dir DIR]
 | `--download-dir DIR` | Download and compile under `DIR`. Defaults to `/tmp/cef`. |
 | `--build-dir DIR` | Copy final CEF binary distributions to `DIR`. |
 | `--skip-prereqs` | Do not run `scripts/install-linux-build-deps.sh`. |
-| `--resume` | Reuse the existing checkout/build tree instead of passing `--force-clean`. |
+| `--resume` | Reuse the existing checkout/build tree, force build/distribution, and do not pass `--force-clean`. |
 | `--no-upload` | Build only; do not require AWS config and do not upload to S3. |
 | `--foreground` | Run in the current shell instead of starting a detached `nohup` build. |
 
@@ -50,7 +50,7 @@ Windows:
 | `-DownloadDir DIR` | Download and compile under `DIR`. Defaults to `C:\cef`. |
 | `-BuildDir DIR` | Copy final CEF binary distributions to `DIR`. |
 | `-InstallPrereqs` | Run `scripts\install-windows-build-deps.ps1` first. |
-| `-Resume` | Reuse the existing checkout/build tree instead of passing `--force-clean`. |
+| `-Resume` | Reuse the existing checkout/build tree, force build/distribution, and do not pass `--force-clean`. |
 | `-NoUpload` | Build only; do not require AWS config and do not upload to S3. |
 
 ## Linux
