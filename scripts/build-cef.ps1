@@ -30,6 +30,32 @@ function Get-PythonCommand {
   throw "Python was not found on PATH."
 }
 
+function Get-VsBuildToolsPath {
+  $vsWhereCandidates = @(
+    (Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"),
+    (Join-Path $env:ProgramFiles "Microsoft Visual Studio\Installer\vswhere.exe")
+  )
+
+  foreach ($vsWhere in $vsWhereCandidates) {
+    if (-not (Test-Path $vsWhere)) {
+      continue
+    }
+
+    $installPath = & $vsWhere `
+      -products * `
+      -version "[17.0,18.0)" `
+      -requires Microsoft.VisualStudio.Workload.VCTools `
+      -property installationPath `
+      -latest
+
+    if ($LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($installPath)) {
+      return $installPath.Trim()
+    }
+  }
+
+  throw "Visual Studio 2022 Build Tools with VCTools workload was not found."
+}
+
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $automateDir = Join-Path $repoRoot "tools\automate"
 $automate = Join-Path $automateDir "automate-git.py"
@@ -43,7 +69,9 @@ Invoke-WebRequest `
   -UseBasicParsing
 
 $env:GN_DEFINES = $GnDefines
+$env:DEPOT_TOOLS_WIN_TOOLCHAIN = "0"
 $env:GYP_MSVS_VERSION = "2022"
+$env:GYP_MSVS_OVERRIDE_PATH = Get-VsBuildToolsPath
 $env:CEF_ARCHIVE_FORMAT = "tar.bz2"
 
 $archFlag = "--x64-build"
