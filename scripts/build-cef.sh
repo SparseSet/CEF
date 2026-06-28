@@ -35,9 +35,11 @@ AUTOMATE_DIR="$REPO_ROOT/tools/automate"
 AUTOMATE="$AUTOMATE_DIR/automate-git.py"
 
 mkdir -p "$AUTOMATE_DIR" "$CEF_DOWNLOAD_DIR"
-curl -fsSL \
-  "https://raw.githubusercontent.com/chromiumembedded/cef/master/tools/automate/automate-git.py" \
-  -o "$AUTOMATE"
+if [[ ! -f "$AUTOMATE" ]]; then
+  curl -fsSL \
+    "https://raw.githubusercontent.com/chromiumembedded/cef/master/tools/automate/automate-git.py" \
+    -o "$AUTOMATE"
+fi
 
 export GN_DEFINES="$CEF_GN_DEFINES"
 export CEF_ARCHIVE_FORMAT=tar.bz2
