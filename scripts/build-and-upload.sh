@@ -140,7 +140,7 @@ case "$TARGET" in
     export CEF_BUILD_TARGET="cefsimple"
     export CEF_DOWNLOAD_DIR="${REQUESTED_DOWNLOAD_DIR:-${CEF_DOWNLOAD_DIR:-/tmp/cef}}"
     export CEF_WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-true}"
-    export CEF_GN_DEFINES="is_official_build=true use_sysroot=true symbol_level=0 blink_symbol_level=0 v8_symbol_level=0 is_cfi=false v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
+    export CEF_GN_DEFINES="is_official_build=true use_sysroot=true symbol_level=0 is_cfi=false v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
     ;;
   linux-arm64)
     [[ "$(uname -s)" == "Linux" ]] || { echo "$TARGET must run on Linux." >&2; exit 1; }
@@ -148,7 +148,7 @@ case "$TARGET" in
     export CEF_BUILD_TARGET="cefsimple"
     export CEF_DOWNLOAD_DIR="${REQUESTED_DOWNLOAD_DIR:-${CEF_DOWNLOAD_DIR:-/tmp/cef}}"
     export CEF_WITH_PGO_PROFILES="${CEF_WITH_PGO_PROFILES:-false}"
-    export CEF_GN_DEFINES="is_official_build=true use_sysroot=true symbol_level=0 blink_symbol_level=0 v8_symbol_level=0 is_cfi=false use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
+    export CEF_GN_DEFINES="is_official_build=true use_sysroot=true symbol_level=0 is_cfi=false use_thin_lto=false chrome_pgo_phase=0 v8_enable_sandbox=false proprietary_codecs=true ffmpeg_branding=Chrome"
     ;;
   macos-arm64)
     [[ "$(uname -s)" == "Darwin" ]] || { echo "$TARGET must run on macOS." >&2; exit 1; }
